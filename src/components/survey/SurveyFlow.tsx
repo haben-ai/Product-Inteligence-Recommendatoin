@@ -141,7 +141,7 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="sticky top-0 z-10 -mx-4 bg-cotton pt-2 pb-1 sm:mx-0">
+      <div className="sticky top-0 z-10 -mx-4 bg-bg pt-2 pb-1 sm:mx-0">
         <TibebBand progress={answeredCount / total} label={t.questionOf(step + 1, total)} />
       </div>
 
@@ -152,6 +152,7 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
           next();
         }}
         noValidate
+        aria-busy={sending || undefined}
       >
         {/* Honeypot: invisible to people and assistive tech */}
         <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">

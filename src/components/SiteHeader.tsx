@@ -18,7 +18,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
       <div className="mx-auto flex max-w-[38rem] items-center justify-between gap-2 px-4 pt-4">
         <Link
           href={`/${lang}`}
-          className="font-serif text-sm font-semibold tracking-tight text-ink no-underline"
+          className="font-display text-base text-fg no-underline"
         >
           {ui[lang].brand}
         </Link>
@@ -36,8 +36,8 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                     className={
                       "inline-flex min-h-11 items-center rounded-full px-3 transition-colors " +
                       (current
-                        ? "bg-ink text-cotton"
-                        : "text-ink-soft hover:bg-thread/60 hover:text-ink")
+                        ? "bg-fg text-bg"
+                        : "text-muted hover:bg-line/60 hover:text-fg")
                     }
                   >
                     {ui[l].langName}

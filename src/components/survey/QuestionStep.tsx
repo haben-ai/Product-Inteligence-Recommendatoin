@@ -37,12 +37,12 @@ export const QuestionStep = forwardRef<HTMLHeadingElement, Props>(function Quest
       aria-describedby={[q.hint ? hintId : "", error ? errorId : ""].join(" ").trim() || undefined}
     >
       <legend className="contents">
-        <p className="mb-2 text-sm text-ink-soft">{t.questionOf(index + 1, total)}</p>
+        <p className="mb-2 text-sm text-muted">{t.questionOf(index + 1, total)}</p>
         <h1
           ref={headingRef}
           tabIndex={-1}
           className={
-            "font-serif font-semibold text-pretty outline-none " +
+            "font-display text-pretty outline-none " +
             // Very long questions (e.g. Q9) drop one step so the options stay on screen.
             (q.title[lang].length > 140 ? "text-lg sm:text-xl" : "text-xl sm:text-2xl")
           }
@@ -52,7 +52,7 @@ export const QuestionStep = forwardRef<HTMLHeadingElement, Props>(function Quest
       </legend>
 
       {q.hint && (
-        <p id={hintId} className="-mt-3 text-sm text-ink-soft">
+        <p id={hintId} className="-mt-3 text-sm text-muted">
           {q.hint[lang]}
         </p>
       )}
@@ -87,7 +87,7 @@ export const QuestionStep = forwardRef<HTMLHeadingElement, Props>(function Quest
                       <path
                         d="M3.5 8.5l3 3 6-7"
                         fill="none"
-                        stroke="var(--cotton-raised)"
+                        stroke="var(--card)"
                         strokeWidth="2.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -103,7 +103,7 @@ export const QuestionStep = forwardRef<HTMLHeadingElement, Props>(function Quest
       </div>
 
       {atMax && q.max && (
-        <p className="-mt-3 text-sm text-ink-soft" aria-live="polite">
+        <p className="-mt-3 text-sm text-muted" aria-live="polite">
           {t.maxReached(q.max)}
         </p>
       )}
@@ -125,6 +125,8 @@ export const QuestionStep = forwardRef<HTMLHeadingElement, Props>(function Quest
                 maxLength={OTHER_MAX_LENGTH}
                 value={answer?.other ?? ""}
                 onChange={(e) => onOther(e.target.value)}
+                aria-invalid={error && !answer?.other?.trim() ? true : undefined}
+                aria-describedby={error ? errorId : undefined}
                 autoComplete="off"
               />
             </label>
@@ -133,7 +135,7 @@ export const QuestionStep = forwardRef<HTMLHeadingElement, Props>(function Quest
       </AnimatePresence>
 
       {error && (
-        <p id={errorId} role="alert" className="-mt-2 text-sm font-medium text-rose">
+        <p id={errorId} role="alert" className="-mt-2 text-sm font-medium text-danger">
           {error}
         </p>
       )}

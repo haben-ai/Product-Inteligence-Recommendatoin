@@ -43,7 +43,7 @@ export function TibebBand({
       <svg className="absolute inset-0 h-full w-full" aria-hidden>
         <defs>
           <pattern id={`warp-${id}`} width="6" height={height} patternUnits="userSpaceOnUse">
-            <rect x="2.5" width="1" height={height} fill="var(--thread)" />
+            <rect x="2.5" width="1" height={height} fill="var(--secondary)" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill={`url(#warp-${id})`} />
@@ -70,21 +70,21 @@ export function TibebBand({
               height={height}
               patternUnits="userSpaceOnUse"
             >
-              <rect width="36" height={height} fill="var(--tibeb-green)" />
-              <rect y="0" width="36" height="3" fill="var(--tibeb-gold)" />
-              <rect y={height - 3} width="36" height="3" fill="var(--tibeb-gold)" />
+              <rect width="36" height={height} fill="var(--primary-strong)" />
+              <rect y="0" width="36" height="3" fill="var(--secondary)" />
+              <rect y={height - 3} width="36" height="3" fill="var(--secondary)" />
               {/* diamond */}
               <path
                 d={`M18 ${height / 2 - 6} L24 ${height / 2} L18 ${height / 2 + 6} L12 ${height / 2} Z`}
-                fill="var(--tibeb-gold)"
+                fill="var(--accent)"
               />
               <path
                 d={`M18 ${height / 2 - 2.5} L20.5 ${height / 2} L18 ${height / 2 + 2.5} L15.5 ${height / 2} Z`}
-                fill="var(--tibeb-rose)"
+                fill="var(--bg)"
               />
               {/* small cross centred on each tile seam (drawn as two halves) */}
               {[0, 36].map((x) => (
-                <g key={x} fill="var(--cotton)">
+                <g key={x} fill="var(--bg)">
                   <rect x={x - 2.5} y={height / 2 - 0.75} width="5" height="1.5" />
                   <rect x={x - 0.75} y={height / 2 - 2.5} width="1.5" height="5" />
                 </g>

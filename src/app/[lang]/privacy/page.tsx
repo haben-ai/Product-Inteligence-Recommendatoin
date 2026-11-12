@@ -9,17 +9,17 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
 
   return (
     <article className="flex flex-col gap-8 pt-8 sm:pt-12">
-      <h1 className="font-serif text-2xl font-semibold sm:text-3xl">{t.privacyTitle}</h1>
+      <h1 className="font-display text-2xl sm:text-3xl">{t.privacyTitle}</h1>
       <dl className="flex flex-col gap-6">
         {t.privacy.map((s) => (
           <div key={s.h} className="flex flex-col gap-1">
-            <dt className="font-serif text-lg font-semibold">{s.h}</dt>
-            <dd className="m-0 max-w-[34em] text-pretty text-ink-soft">{s.p}</dd>
+            <dt className="font-display text-lg">{s.h}</dt>
+            <dd className="m-0 max-w-[34em] text-pretty text-muted">{s.p}</dd>
           </div>
         ))}
         {CONTACT_EMAIL && (
           <div className="flex flex-col gap-1">
-            <dt className="font-serif text-lg font-semibold">{t.contact}</dt>
+            <dt className="font-display text-lg">{t.contact}</dt>
             <dd className="m-0">
               <a href={`mailto:${CONTACT_EMAIL}`} className="link">
                 {CONTACT_EMAIL}

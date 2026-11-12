@@ -2,22 +2,29 @@
 
 /*
   Design tokens — Tigrigna Beauty & Care
-  Idea: the woven tibeb border of habesha cotton. Plain cotton ground, deep ink text,
-  and the band's three threads (green, gold, rose) as the only colour. The band itself
-  is the one bold element (top of every page, and the survey's progress bar).
+  Palette: ui-ux-pro-max "Soft pink + lavender luxury" (beauty / wellness), contrast-checked:
+    fg on bg 8.8:1 · muted on bg 6.9:1 · white on --primary-strong 4.6:1 · --danger on bg 5.9:1
+  Style: Soft UI Evolution — soft layered shadows, 10–12px radii, 200–300ms transitions, visible focus.
+  The woven tibeb band (top of page / survey progress) keeps its pattern in the new colours.
 */
 :root {
   color-scheme: light;
 
-  --cotton: #f5f6f2; /* page ground: cool, undyed cotton */
-  --cotton-raised: #fdfdfb; /* option surfaces */
-  --ink: #1d1932; /* text: deep indigo-black */
-  --ink-soft: #57536b; /* secondary text */
-  --thread: #d6d9cf; /* hairlines, unselected borders */
-  --tibeb-green: #17654d; /* primary action + selection */
-  --tibeb-green-deep: #0f4a38;
-  --tibeb-gold: #d9a21b;
-  --tibeb-rose: #b23a5c; /* errors, small accents */
+  --bg: #fdf2f8; /* blush page background */
+  --card: #ffffff;
+  --fg: #831843; /* deep wine text */
+  --muted: #475569; /* secondary text */
+  --line: #fbcfe8; /* soft borders, dividers */
+  --primary: #ec4899; /* brand pink: selection, focus ring, band */
+  --primary-strong: #db2777; /* buttons (white text 4.6:1) */
+  --primary-deep: #be185d; /* button hover */
+  --secondary: #f9a8d4; /* soft pink accents */
+  --accent: #8b5cf6; /* lavender accents */
+  --accent-soft: #ede9fe;
+  --danger: #b91c1c;
+
+  --shadow-soft: 0 1px 2px rgb(131 24 67 / 0.06), 0 2px 8px rgb(131 24 67 / 0.06);
+  --shadow-lift: 0 2px 4px rgb(131 24 67 / 0.08), 0 8px 20px rgb(236 72 153 / 0.14);
 
   /* 8px grid */
   --space-1: 0.5rem;
@@ -27,42 +34,48 @@
   --space-6: 3rem;
   --space-8: 4rem;
 
-  --radius-option: 14px;
+  --radius-option: 12px;
+  --radius-field: 10px;
   --radius-button: 999px;
+  --duration: 200ms;
 }
 
 @theme inline {
-  --color-cotton: var(--cotton);
-  --color-cotton-raised: var(--cotton-raised);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-thread: var(--thread);
-  --color-green: var(--tibeb-green);
-  --color-green-deep: var(--tibeb-green-deep);
-  --color-gold: var(--tibeb-gold);
-  --color-rose: var(--tibeb-rose);
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
 
-  --font-sans: var(--font-sans-ethiopic), system-ui, sans-serif;
-  --font-serif: var(--font-serif-ethiopic), Georgia, serif;
+  /* Abyssinica SIL: traditional calligraphic Ge'ez for headings (single weight — never faux-bold).
+     Menbere: modern variable Ge'ez + Latin for everything else. */
+  --font-sans: var(--font-menbere), system-ui, sans-serif;
+  --font-display: var(--font-abyssinica), var(--font-menbere), Georgia, serif;
 
   /* Type scale (~1.25 ratio). Ethiopic glyphs need generous line-height. */
   --text-sm: 0.9375rem;
   --text-sm--line-height: 1.6;
   --text-base: 1.0625rem;
   --text-base--line-height: 1.7;
-  --text-lg: 1.25rem;
+  --text-lg: 1.3125rem;
   --text-lg--line-height: 1.55;
-  --text-xl: 1.5625rem;
-  --text-xl--line-height: 1.4;
-  --text-2xl: 2rem;
-  --text-2xl--line-height: 1.25;
-  --text-3xl: 2.625rem;
-  --text-3xl--line-height: 1.15;
+  --text-xl: 1.625rem;
+  --text-xl--line-height: 1.45;
+  --text-2xl: 2.125rem;
+  --text-2xl--line-height: 1.3;
+  --text-3xl: 2.75rem;
+  --text-3xl--line-height: 1.2;
 }
 
 html {
-  background: var(--cotton);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -85,14 +98,19 @@ body {
   padding: var(--space-4) var(--space-2) var(--space-8);
 }
 
+.font-display {
+  font-weight: 400;
+  font-synthesis: none;
+}
+
 :focus-visible {
-  outline: 3px solid var(--tibeb-gold);
+  outline: 3px solid var(--primary);
   outline-offset: 3px;
   border-radius: 6px;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--tibeb-gold) 35%, transparent);
+  background: color-mix(in srgb, var(--secondary) 60%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -113,24 +131,30 @@ body {
     min-height: 3.25rem;
     padding: 0 var(--space-4);
     border-radius: var(--radius-button);
-    background: var(--tibeb-green);
-    color: var(--cotton-raised);
+    background: var(--primary-strong);
+    color: #fff;
     font-weight: 600;
     font-size: var(--text-base);
     text-decoration: none;
     border: 0;
     cursor: pointer;
-    transition: background-color 160ms ease, transform 160ms ease;
+    box-shadow: var(--shadow-soft);
+    transition:
+      background-color var(--duration) ease,
+      box-shadow var(--duration) ease,
+      transform 150ms ease;
   }
   .btn-primary:hover {
-    background: var(--tibeb-green-deep);
+    background: var(--primary-deep);
+    box-shadow: var(--shadow-lift);
   }
   .btn-primary:active {
     transform: scale(0.98);
   }
   .btn-primary:disabled {
-    opacity: 0.6;
+    opacity: 0.65;
     cursor: progress;
+    box-shadow: none;
   }
 
   .btn-quiet {
@@ -141,33 +165,40 @@ body {
     margin-left: calc(var(--space-2) * -1);
     border-radius: var(--radius-button);
     background: transparent;
-    color: var(--ink-soft);
+    color: var(--muted);
     font-size: var(--text-sm);
     border: 0;
     cursor: pointer;
+    transition:
+      color var(--duration) ease,
+      background-color var(--duration) ease;
   }
   .btn-quiet:hover {
-    color: var(--ink);
-    background: color-mix(in srgb, var(--thread) 55%, transparent);
+    color: var(--fg);
+    background: color-mix(in srgb, var(--line) 60%, transparent);
   }
 
   .link {
-    color: var(--ink);
+    color: var(--fg);
     text-decoration: underline;
-    text-decoration-color: var(--tibeb-gold);
+    text-decoration-color: var(--accent);
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
+    transition: text-decoration-color var(--duration) ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--primary);
   }
 
   .diamond {
     flex: none;
     width: 9px;
     height: 9px;
-    background: var(--tibeb-gold);
+    background: var(--accent);
     transform: rotate(45deg);
   }
 
-  /* Answer options: real radio/checkbox inputs, visually replaced */
+  /* Answer options: real radio/checkbox inputs, visually replaced (Soft UI cards) */
   .option {
     position: relative;
     display: flex;
@@ -175,14 +206,19 @@ body {
     gap: var(--space-2);
     min-height: 3.5rem;
     padding: var(--space-1) var(--space-2);
-    border: 1.5px solid var(--thread);
+    border: 1.5px solid var(--line);
     border-radius: var(--radius-option);
-    background: var(--cotton-raised);
+    background: var(--card);
+    box-shadow: var(--shadow-soft);
     cursor: pointer;
-    transition: border-color 140ms ease, background-color 140ms ease;
+    transition:
+      border-color var(--duration) ease,
+      background-color var(--duration) ease,
+      box-shadow var(--duration) ease;
   }
   .option:hover {
-    border-color: color-mix(in srgb, var(--tibeb-green) 45%, var(--thread));
+    border-color: var(--secondary);
+    box-shadow: var(--shadow-lift);
   }
   .option input {
     position: absolute;
@@ -192,16 +228,18 @@ body {
     pointer-events: none;
   }
   .option:has(input:focus-visible) {
-    outline: 3px solid var(--tibeb-gold);
+    outline: 3px solid var(--primary);
     outline-offset: 2px;
   }
   .option:has(input:checked) {
-    border-color: var(--tibeb-green);
-    background: color-mix(in srgb, var(--tibeb-green) 7%, var(--cotton-raised));
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 6%, var(--card));
+    box-shadow: var(--shadow-lift);
   }
   .option:has(input:disabled) {
     cursor: not-allowed;
     opacity: 0.5;
+    box-shadow: none;
   }
   .option-mark {
     flex: none;
@@ -209,8 +247,11 @@ body {
     place-items: center;
     width: 1.375rem;
     height: 1.375rem;
-    border: 1.5px solid var(--ink-soft);
-    background: var(--cotton-raised);
+    border: 1.5px solid var(--muted);
+    background: var(--card);
+    transition:
+      background-color var(--duration) ease,
+      border-color var(--duration) ease;
   }
   .option-mark[data-kind="single"] {
     border-radius: 999px;
@@ -219,23 +260,29 @@ body {
     border-radius: 6px;
   }
   .option:has(input:checked) .option-mark {
-    border-color: var(--tibeb-green);
-    background: var(--tibeb-green);
+    border-color: var(--primary-strong);
+    background: var(--primary-strong);
   }
 
   .text-field {
     width: 100%;
     min-height: 3rem;
     padding: var(--space-1) var(--space-2);
-    border: 1.5px solid var(--thread);
-    border-radius: 10px;
-    background: var(--cotton-raised);
-    color: var(--ink);
+    border: 1.5px solid var(--muted);
+    border-radius: var(--radius-field);
+    background: var(--card);
+    color: var(--fg);
     font: inherit;
+    transition:
+      border-color var(--duration) ease,
+      box-shadow var(--duration) ease;
   }
   .text-field:focus {
     outline: none;
-    border-color: var(--tibeb-green);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tibeb-gold) 45%, transparent);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+  .text-field[aria-invalid="true"] {
+    border-color: var(--danger);
   }
 }

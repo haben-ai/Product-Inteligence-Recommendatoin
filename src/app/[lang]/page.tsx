@@ -10,9 +10,9 @@ export default async function WelcomePage({ params }: PageProps<"/[lang]">) {
 
   return (
     <article className="flex flex-col gap-8 pt-8 sm:pt-16">
-      <h1 className="font-serif text-2xl font-semibold text-balance sm:text-3xl">{t.introTitle}</h1>
+      <h1 className="font-display text-2xl text-balance sm:text-3xl">{t.introTitle}</h1>
 
-      <div className="flex flex-col gap-4 text-ink-soft">
+      <div className="flex flex-col gap-4 text-muted">
         {t.introBody.map((p) => (
           <p key={p} className="max-w-[34em] text-pretty">
             {p}
@@ -20,7 +20,7 @@ export default async function WelcomePage({ params }: PageProps<"/[lang]">) {
         ))}
       </div>
 
-      <ul className="flex flex-col gap-2 border-y border-thread py-4 text-sm">
+      <ul className="flex flex-col gap-2 border-y border-line py-4 text-sm">
         {t.facts.map((f) => (
           <li key={f} className="flex items-center gap-3">
             <span aria-hidden className="diamond" />
@@ -31,7 +31,7 @@ export default async function WelcomePage({ params }: PageProps<"/[lang]">) {
 
       <StartActions lang={lang} />
 
-      <p className="text-sm text-ink-soft">
+      <p className="text-sm text-muted">
         <Link href={`/${lang}/privacy`} className="link">
           {t.privacyLink}
         </Link>
