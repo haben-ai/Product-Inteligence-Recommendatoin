@@ -1,26 +1,241 @@
 @import "tailwindcss";
 
+/*
+  Design tokens — Tigrigna Beauty & Care
+  Idea: the woven tibeb border of habesha cotton. Plain cotton ground, deep ink text,
+  and the band's three threads (green, gold, rose) as the only colour. The band itself
+  is the one bold element (top of every page, and the survey's progress bar).
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --cotton: #f5f6f2; /* page ground: cool, undyed cotton */
+  --cotton-raised: #fdfdfb; /* option surfaces */
+  --ink: #1d1932; /* text: deep indigo-black */
+  --ink-soft: #57536b; /* secondary text */
+  --thread: #d6d9cf; /* hairlines, unselected borders */
+  --tibeb-green: #17654d; /* primary action + selection */
+  --tibeb-green-deep: #0f4a38;
+  --tibeb-gold: #d9a21b;
+  --tibeb-rose: #b23a5c; /* errors, small accents */
+
+  /* 8px grid */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+
+  --radius-option: 14px;
+  --radius-button: 999px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cotton: var(--cotton);
+  --color-cotton-raised: var(--cotton-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-thread: var(--thread);
+  --color-green: var(--tibeb-green);
+  --color-green-deep: var(--tibeb-green-deep);
+  --color-gold: var(--tibeb-gold);
+  --color-rose: var(--tibeb-rose);
+
+  --font-sans: var(--font-sans-ethiopic), system-ui, sans-serif;
+  --font-serif: var(--font-serif-ethiopic), Georgia, serif;
+
+  /* Type scale (~1.25 ratio). Ethiopic glyphs need generous line-height. */
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.7;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.55;
+  --text-xl: 1.5625rem;
+  --text-xl--line-height: 1.4;
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 2.625rem;
+  --text-3xl--line-height: 1.15;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--cotton);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-2) var(--space-8);
+}
+
+:focus-visible {
+  outline: 3px solid var(--tibeb-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--tibeb-gold) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-height: 3.25rem;
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-button);
+    background: var(--tibeb-green);
+    color: var(--cotton-raised);
+    font-weight: 600;
+    font-size: var(--text-base);
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+  .btn-primary:hover {
+    background: var(--tibeb-green-deep);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .btn-quiet {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 var(--space-2);
+    margin-left: calc(var(--space-2) * -1);
+    border-radius: var(--radius-button);
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+    border: 0;
+    cursor: pointer;
+  }
+  .btn-quiet:hover {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--thread) 55%, transparent);
+  }
+
+  .link {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--tibeb-gold);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .diamond {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    background: var(--tibeb-gold);
+    transform: rotate(45deg);
+  }
+
+  /* Answer options: real radio/checkbox inputs, visually replaced */
+  .option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 3.5rem;
+    padding: var(--space-1) var(--space-2);
+    border: 1.5px solid var(--thread);
+    border-radius: var(--radius-option);
+    background: var(--cotton-raised);
+    cursor: pointer;
+    transition: border-color 140ms ease, background-color 140ms ease;
+  }
+  .option:hover {
+    border-color: color-mix(in srgb, var(--tibeb-green) 45%, var(--thread));
+  }
+  .option input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+  .option:has(input:focus-visible) {
+    outline: 3px solid var(--tibeb-gold);
+    outline-offset: 2px;
+  }
+  .option:has(input:checked) {
+    border-color: var(--tibeb-green);
+    background: color-mix(in srgb, var(--tibeb-green) 7%, var(--cotton-raised));
+  }
+  .option:has(input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .option-mark {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    border: 1.5px solid var(--ink-soft);
+    background: var(--cotton-raised);
+  }
+  .option-mark[data-kind="single"] {
+    border-radius: 999px;
+  }
+  .option-mark[data-kind="multi"] {
+    border-radius: 6px;
+  }
+  .option:has(input:checked) .option-mark {
+    border-color: var(--tibeb-green);
+    background: var(--tibeb-green);
+  }
+
+  .text-field {
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--space-1) var(--space-2);
+    border: 1.5px solid var(--thread);
+    border-radius: 10px;
+    background: var(--cotton-raised);
+    color: var(--ink);
+    font: inherit;
+  }
+  .text-field:focus {
+    outline: none;
+    border-color: var(--tibeb-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tibeb-gold) 45%, transparent);
+  }
 }

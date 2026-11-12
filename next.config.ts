@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
@@ -11,6 +10,10 @@ const nextConfig: NextConfig = {
         as: "*.css",
       },
     },
+  },
+  async redirects() {
+    // Most visitors are Tigrigna speakers, so the site opens in Tigrigna.
+    return [{ source: "/", destination: "/ti", permanent: false }];
   },
 };
 
