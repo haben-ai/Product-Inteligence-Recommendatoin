@@ -24,7 +24,7 @@ export const ui = {
       "We are conducting a short survey to better understand people's experiences, challenges, and preferences regarding skincare and haircare.",
       "Your feedback will help us develop accessible and useful beauty education and product recommendation services.",
     ],
-    facts: ["10 questions", "About 2 minutes", "Anonymous — we don't ask for your name or email"],
+    facts: ["9 questions", "About 2 minutes", "Anonymous — we don't ask for your name or email"],
     start: "Let's get started",
     resume: "Continue where you left off",
     restart: "Start over",
@@ -48,7 +48,7 @@ export const ui = {
     privacy: [
       {
         h: "What we collect",
-        p: "Only your answers to the 10 survey questions, the language you used and the date. We don't ask for your name, email or contact details, and we don't store your IP address.",
+        p: "Only your answers to the 9 survey questions, the language you used and the date. We don't ask for your name, email or contact details, and we don't store your IP address.",
       },
       {
         h: "Why",
@@ -77,9 +77,9 @@ export const ui = {
     introTitle: "መጽናዕቲ ብዛዕባ ክንክን ቆርበትን ጸጉርን",
     introBody: [
       "እዚ ሓጺር መጽናዕቲ፡ ሰባት ብዛዕባ ክንክን ቆርበትን ጸጉርን ዘለዎም ተመኩሮ፡ ዝገጥሞም ጸገማትን ድሌታትን ንምርዳእ ዝተዳለወ እዩ።",
-      "ርእይቶኹም ብቐሊሉ ክርዳእ ዝከአል፡ ጠቓሚ ሓበሬታን ምኽርታትን ብዛዕባ ክንክን ቆርበትን ጸጉርን ዝህብ ኣገልግሎት ንምድላው ክሕግዘና እዩ።",
+      "ርእይቶኹም ብቐሊሉ ክርዳኣካ ዝኽአል፡ ጠቓሚ ሓበሬታን ምኽርታትን ብዛዕባ ክንክን ቆርበትን ጸጉርን ዝህብ ኣገልግሎት ንምድላው ክሕግዘና እዩ።",
     ],
-    facts: ["10 ሕቶታት", "ኣስታት 2 ደቒቕ", "ስምኩም ወይ ኢመይልኩም ኣይንሓትትን"],
+    facts: ["9 ሕቶታት", "ኣስታት 2 ደቒቕ", "ስምኩም ወይ ኢመይልኩም ኣይንሓትትን"],
     start: "ንጀምር!",
     resume: "ካብ ዝኣረፍኩምሉ ቀጽሉ",
     restart: "ካብ መጀመርታ ጀምሩ",
@@ -103,7 +103,7 @@ export const ui = {
     privacy: [
       {
         h: "እንታይ ንእክብ",
-        p: "ን10 ሕቶታት ዝሃብኩሞ መልስታት፡ ዝተጠቐምኩምሉ ቋንቋን ዕለትን ጥራይ። ስምኩም፡ ኢመይልኩም ወይ ኣድራሻኹም ኣይንሓትትን፡ IP ኣድራሻኹም ውን ኣይንዕቅብን።",
+        p: "ን9 ሕቶታት ዝሃብኩሞ መልስታት፡ ዝተጠቐምኩምሉ ቋንቋን ዕለትን ጥራይ። ስምኩም፡ ኢመይልኩም ወይ ኣድራሻኹም ኣይንሓትትን፡ IP ኣድራሻኹም ውን ኣይንዕቅብን።",
       },
       {
         h: "ስለምንታይ",

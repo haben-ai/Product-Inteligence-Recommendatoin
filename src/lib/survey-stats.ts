@@ -15,7 +15,6 @@ export type Filters = { lang?: Locale; from?: string; to?: string };
 /** Short column names for the table and CSV, in question order. */
 export const SHORT_LABELS: Record<string, string> = {
   q1_age: "Age",
-  q2_interest: "Interest",
   q3_difficulty_freq: "Difficulty choosing",
   q4_difficulties: "Difficulties",
   q5_sources: "Info sources",

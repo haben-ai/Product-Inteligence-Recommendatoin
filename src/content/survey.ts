@@ -1,9 +1,11 @@
 // Market-research survey: single source of truth for every question.
-// Text is copied from "Website Survey English.docx" and "Website Survey Tigrinya.docx".
+// Text is copied from "Final_Website Survey English.docx" and "Final_Website Survey Tigrinya .docx".
 // Option ids are stored in the database, so never rename an id once responses exist —
 // add a new id and bump SURVEY_VERSION instead.
 
-export const SURVEY_VERSION = 1;
+// v1: original 10 questions. v2: final documents — 9 questions (interest question removed,
+// "TikTok or Instagram" + "YouTube" merged into "Social media", new usefulness wording, reordered).
+export const SURVEY_VERSION = 2;
 
 export type Locale = "ti" | "en";
 export type Text = Record<Locale, string>;
@@ -34,6 +36,8 @@ const SELECT_ALL: Text = {
 };
 const UP_TO_THREE: Text = { en: "Select up to 3", ti: "ክሳብ ሰለስተ ምረጹ" };
 
+// Order and wording follow the FINAL documents (9 questions). Question ids keep their
+// original names so answers to unchanged questions line up with version-1 responses.
 export const questions: Question[] = [
   {
     id: "q1_age",
@@ -48,25 +52,11 @@ export const questions: Question[] = [
     ],
   },
   {
-    id: "q2_interest",
-    kind: "single",
-    title: {
-      en: "How interested are you in skincare and haircare?",
-      ti: "ኣብ ክንክን ቆርበትን ጸጉርን ክንደይ ተገዳስነት ኣለኩም?",
-    },
-    options: [
-      { id: "very", label: { en: "Very interested", ti: "ኣዝየ እግደስ" } },
-      { id: "somewhat", label: { en: "Somewhat interested", ti: "ብመጠኑ እግደስ" } },
-      { id: "not_very", label: { en: "Not very interested", ti: "ብዙሕ ኣይግደስን" } },
-      { id: "not_at_all", label: { en: "Not interested at all", ti: "ፈጺመ ኣይግደስን" } },
-    ],
-  },
-  {
     id: "q3_difficulty_freq",
     kind: "single",
     title: {
       en: "How often do you find it difficult to choose skincare or haircare products that suit your needs?",
-      ti: "ንድሌታትኩም ዝሰማማዕ ናይ ክንክን ቆርበት ወይ ጸጉሪ ፍርያት ክትመርጹ ከለኹም፡ ክንደይ ግዜ የጸግመኩም?",
+      ti: "ንድሌታትኩም ዝሰማማዕ ናይ ክንክን ቆርበት ወይ ጸጉሪ ፍርያት ክትመርጹ ከለኹም፡ ማዕረ ክንደይ የጸግመኩም?",
     },
     options: [
       { id: "always", label: { en: "Always", ti: "ኩሉ ግዜ" } },
@@ -86,11 +76,17 @@ export const questions: Question[] = [
     options: [
       {
         id: "which_suit",
-        label: { en: "Not knowing which products suit my needs", ti: "ንድሌታተይ ዝሰማማዕ ፍርያት ምፍላጥ" },
+        label: {
+          en: "Not knowing which products suit my needs",
+          ti: "ንድሌታተይ ዝሰማማዕ ፍርያት ምፍላጥ",
+        },
       },
       {
         id: "ingredients",
-        label: { en: "Understanding cosmetic ingredients", ti: "ኣብ ፍርያት ዘለዉ ንጥረ ነገራት ምርዳእ" },
+        label: {
+          en: "Understanding cosmetic ingredients",
+          ti: "ኣብ ፍርያት ዘለዉ ትሕዝቶ ምርዳእ",
+        },
       },
       {
         id: "affordable",
@@ -113,7 +109,10 @@ export const questions: Question[] = [
       {
         id: "none",
         exclusive: true,
-        label: { en: "I don't experience any difficulties", ti: "ዝኾነ ጸገም የብለይን" },
+        label: {
+          en: "I don't experience any difficulties",
+          ti: "ዝኾነ ጸገም የብለይን",
+        },
       },
       { id: "other", other: true, label: OTHER },
     ],
@@ -123,13 +122,16 @@ export const questions: Question[] = [
     kind: "multi",
     title: {
       en: "Where do you currently get skincare and haircare information or product recommendations?",
-      ti: "ብዛዕባ ክንክን ቆርበትን ጸጉርን ሓበሬታ ወይ ምኽሪ ካበይ ትረኽቡ?",
+      ti: "ንክንክን ቆርበትን ጸጉርን ዝምልከት ሓበሬታ ወይ ምኽሪ ካበይ ትረኽቡ?",
     },
     hint: SELECT_ALL,
     options: [
-      { id: "tiktok_instagram", label: { en: "TikTok or Instagram", ti: "ቲክቶክ ወይ ኢንስታግራም" } },
-      { id: "youtube", label: { en: "YouTube", ti: "ዮትዩብ" } },
-      { id: "friends_family", label: { en: "Friends and family", ti: "ካብ ኣዕሩኽትን ስድራቤትን" } },
+      // Version 2 merges "TikTok or Instagram" + "YouTube" into one option.
+      { id: "social_media", label: { en: "Social media", ti: "ማሕበራዊ መራኸቢታት" } },
+      {
+        id: "friends_family",
+        label: { en: "Friends and family", ti: "ካብ ኣዕሩኽትን ስድራቤትን" },
+      },
       {
         id: "store_staff",
         label: {
@@ -137,8 +139,14 @@ export const questions: Question[] = [
           ti: "ካብ ሰራሕተኛታት ድኳናት መመላኽዕን ክንክን ቆርበትን",
         },
       },
-      { id: "web_google", label: { en: "Websites or Google", ti: "ካብ ወብሳይታት ወይ ጉግል" } },
-      { id: "health_professionals", label: { en: "Healthcare professionals", ti: "ካብ ሰብ ሞያ ጥዕና" } },
+      {
+        id: "web_google",
+        label: { en: "Websites or Google", ti: "ካብ ወብሳይታት ወይ ጉግል" },
+      },
+      {
+        id: "health_professionals",
+        label: { en: "Healthcare professionals", ti: "ካብ ሰብ ሞያ ጥዕና" },
+      },
       { id: "other", other: true, label: OTHER },
     ],
   },
@@ -147,33 +155,22 @@ export const questions: Question[] = [
     kind: "single",
     title: {
       en: "How confident are you in understanding cosmetic ingredient labels?",
-      ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ፍርያት ዝርከቡ ንጥረ ነገራት ንምርዳእ ኣብ ፍልጠትኩም ክሳብ ክንደይ ትትአማመኑ?",
+      ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ፍርያት ዝርከቡ ትሕዝቶ ንምርዳእ ኣብ ፍልጠትኩም ክሳብ ክንደይ ትትአማመኑ?",
     },
     options: [
       { id: "very", label: { en: "Very confident", ti: "ኣዝየ እተኣማመን" } },
-      { id: "somewhat", label: { en: "Somewhat confident", ti: "ብመጠኑ እተኣማመን" } },
+      {
+        id: "somewhat",
+        label: { en: "Somewhat confident", ti: "ብመጠኑ እተኣማመን" },
+      },
       { id: "not", label: { en: "Not confident", ti: "ኣይተኣማመንን" } },
       {
         id: "dont_read",
         label: {
           en: "I don't usually read ingredient labels",
-          ti: "መብዛሕትኡ ግዜ ዝርዝር ንጥረ ነገራት ኣየንብብን ኢየ",
+          ti: "መብዛሕትኡ ግዜ ዝርዝር ትሕዝቶ ኣየንብብን ኢየ",
         },
       },
-    ],
-  },
-  {
-    id: "q7_language",
-    kind: "single",
-    title: {
-      en: "Which language would you prefer for skincare and haircare information?",
-      ti: "ብዛዕባ ክንክን ቆርበትን ጸጉርን ሓበሬታ ብኣየናይ ቋንቋ ክትረኽቡ ትመርጹ?",
-    },
-    options: [
-      { id: "tigrigna", label: { en: "Tigrigna", ti: "ትግርኛ" } },
-      { id: "english", label: { en: "English", ti: "እንግሊዝኛ" } },
-      { id: "both", label: { en: "Both Tigrigna and English", ti: "ብትግርኛን እንግሊዝኛን" } },
-      { id: "other", other: true, label: OTHER },
     ],
   },
   {
@@ -186,21 +183,53 @@ export const questions: Question[] = [
     },
     hint: UP_TO_THREE,
     options: [
-      { id: "price", label: { en: "Price and affordability", ti: "ዋጋን ተመጣጣንነቱን" } },
-      { id: "ingredients", label: { en: "Product ingredients", ti: "ኣብቲ ፍርያት ዘለዉ ንጥረ ነገራት" } },
+      {
+        id: "price",
+        label: { en: "Price and affordability", ti: "ዋጋን ተመጣጣንነቱን" },
+      },
+      {
+        id: "ingredients",
+        label: { en: "Product ingredients", ti: "ኣብቲ ፍርያት ዘለዉ ትሕዝቶ" },
+      },
       {
         id: "friends_family",
-        label: { en: "Recommendations from friends or family", ti: "ምኽሪ ኣዕሩኽትን ስድራቤትን" },
+        label: {
+          en: "Recommendations from friends or family",
+          ti: "ምኽሪ ኣዕሩኽትን ስድራቤትን",
+        },
       },
       {
         id: "reviews",
-        label: { en: "Online reviews and ratings", ti: "ኣብ ኢንተርነት ዝርከቡ ርእይቶታትን ገምጋማትን" },
+        label: {
+          en: "Online reviews and ratings",
+          ti: "ኣብ ኢንተርነት ዝርከቡ ርእይቶታትን ገምጋማትን",
+        },
       },
       {
         id: "influencers",
-        label: { en: "Social media influencers", ti: "ኣብ ማሕበራዊ መራኸቢታት ፍርያት ዘላልዩ ሰባት" },
+        label: {
+          en: "Social media influencers",
+          ti: "ኣብ ማሕበራዊ መራኸቢታት ፍርያት ዘላልዩ ሰባት",
+        },
       },
       { id: "brand", label: { en: "Brand reputation", ti: "ዝና ናይቲ ብራንድ" } },
+      { id: "other", other: true, label: OTHER },
+    ],
+  },
+  {
+    id: "q7_language",
+    kind: "single",
+    title: {
+      en: "Which language would you prefer for skincare and haircare information?",
+      ti: "ብዛዕባ ክንክን ቆርበትን ጸጉርን ሓበሬታ ብምንታይ ቋንቋ ክትረኽቡ ትመርጹ?",
+    },
+    options: [
+      { id: "tigrigna", label: { en: "Tigrigna", ti: "ትግርኛ" } },
+      { id: "english", label: { en: "English", ti: "እንግሊዝኛ" } },
+      {
+        id: "both",
+        label: { en: "Both Tigrigna and English", ti: "ብትግርኛን እንግሊዝኛን" },
+      },
       { id: "other", other: true, label: OTHER },
     ],
   },
@@ -208,8 +237,8 @@ export const questions: Question[] = [
     id: "q9_usefulness",
     kind: "single",
     title: {
-      en: "How useful would you find a free website that provides comprehensive, personalized skincare and haircare recommendations based on a questionnaire, including detailed scientific explanations of cosmetic ingredients and product suitability, reviewed by a qualified professional?",
-      ti: "ብመሰረት ንዝቐረቡልኩም ሕቶታት ዝሃብኩሞ መልስታት፡ ንውልቃዊ ድሌታትኩም ዝሰማማዕ ምኽሪ ክንክን ቆርበትን ጸጉርን ፡ ዝርዝር ሳይንሳዊ መብርሂ ብዛዕባ ንጥረ ነገራትን ብብቑዕ ሰብ ሞያ ዝተገምገሙ ናይ ፍርያት ምኽርታትን ብነጻ ዝህብ ወብሳይት ክንደይ ጠቓሚ ይመስለኩም?",
+      en: "How useful would you find a free online service that helps you choose suitable skincare and haircare products based on your individual needs and in your preferred language?",
+      ti: "ንውልቃዊ ድሌታትኩም ዝሰማማዕ ፍርያት፡ ብትደልይዎ ቋንቋ ንኽትመርጹ ዝሕግዘኩም ዲጂታላዊ ኣገልግሎት ክንደይ ጠቓሚ ይመስለኩም?",
     },
     options: [
       { id: "very", label: { en: "Very useful", ti: "ኣዝዩ ጠቓሚ" } },
@@ -223,24 +252,30 @@ export const questions: Question[] = [
     max: 3,
     title: {
       en: "What features or information would you most like to see on a skincare and haircare recommendation website?",
-      ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ምኽሪ ዝህብ ወብሳይት፡ ኣየኖት ኣገልግሎታት ወይ ሓበሬታታት ክትረኽቡ ትደልዩ?",
+      ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ምኽሪ ዝህብ ወብሳይት፡ ካብዞም ዝስዕቡ ኣገልግሎታት ኣየኖት ክትረኽቡ ትደልዩ?",
     },
     hint: UP_TO_THREE,
     options: [
       {
         id: "personalized",
-        label: { en: "Personalized product recommendations", ti: "ንውልቃዊ ድሌታተይ ዝሰማማዕ ናይ ፍርያት ምኽሪ" },
+        label: {
+          en: "Personalized product recommendations",
+          ti: "ንውልቃዊ ድሌታተይ ዝሰማማዕ ናይ ፍርያት ምኽሪ",
+        },
       },
       {
         id: "ingredient_science",
         label: {
           en: "Detailed scientific explanations of ingredients",
-          ti: "ዝርዝር ሳይንሳዊ መብርሂ ብዛዕባ ንጥረ ነገራት",
+          ti: "ዝርዝር ሳይንሳዊ መብርሂ ብዛዕባ ፍርያት ዘለዉ ትሕዝቶ",
         },
       },
       {
         id: "affordable_alternatives",
-        label: { en: "Affordable product alternatives", ti: "ብተመጣጣኒ ዋጋ ዝርከቡ ካልኦት ኣማራጺ ፍርያት" },
+        label: {
+          en: "Affordable product alternatives",
+          ti: "ብተመጣጣኒ ዋጋ ዝርከቡ ካልኦት ኣማራጺ ፍርያት",
+        },
       },
       {
         id: "routines",
@@ -249,7 +284,10 @@ export const questions: Question[] = [
           ti: "ዕለታዊ ክንክን ቆርበት ወይ ጸጉሪ ብደረጃ ዝገልጽ መምርሒ",
         },
       },
-      { id: "comparisons", label: { en: "Product comparisons", ti: "ንዝተፈላለዩ ፍርያት ምንጽጻር" } },
+      {
+        id: "comparisons",
+        label: { en: "Product comparisons", ti: "ንዝተፈላለዩ ፍርያት ምንጽጻር" },
+      },
       {
         id: "education",
         label: {
@@ -277,7 +315,8 @@ export function isAnswered(q: Question, a: Answer | undefined): boolean {
   if (q.kind === "single" && a.choices.length !== 1) return false;
   if (q.max && a.choices.length > q.max) return false;
   const exclusive = q.options.find((o) => o.exclusive);
-  if (exclusive && a.choices.includes(exclusive.id) && a.choices.length > 1) return false;
+  if (exclusive && a.choices.includes(exclusive.id) && a.choices.length > 1)
+    return false;
   const otherOpt = q.options.find((o) => o.other);
   if (otherOpt && a.choices.includes(otherOpt.id)) {
     const text = a.other?.trim() ?? "";
