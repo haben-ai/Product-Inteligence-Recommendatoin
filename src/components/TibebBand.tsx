@@ -70,7 +70,7 @@ export function TibebBand({
               height={height}
               patternUnits="userSpaceOnUse"
             >
-              <rect width="36" height={height} fill="var(--primary-strong)" />
+              <rect width="36" height={height} fill="var(--fg)" />{/* same wine as the active language button */}
               <rect y="0" width="36" height="3" fill="var(--secondary)" />
               <rect y={height - 3} width="36" height="3" fill="var(--secondary)" />
               {/* diamond */}

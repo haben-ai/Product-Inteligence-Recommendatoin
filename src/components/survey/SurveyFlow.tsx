@@ -3,11 +3,17 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { isAnswered, questions, type Answers, type Locale } from "@/content/survey";
+import {
+  isAnswered,
+  questions,
+  type Answers,
+  type Locale,
+} from "@/content/survey";
 import { ui } from "@/content/ui";
 import { submitSurvey } from "@/app/[lang]/survey/actions";
 import { clearProgress, loadProgress, saveProgress } from "@/lib/progress";
 import { TibebBand } from "@/components/TibebBand";
+import { Scene } from "@/components/illustrations/Scene";
 import { QuestionStep } from "./QuestionStep";
 
 const total = questions.length;
@@ -52,7 +58,9 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
 
   const q = questions[step];
   const a = answers[q.id];
-  const answeredCount = questions.filter((qq) => isAnswered(qq, answers[qq.id])).length;
+  const answeredCount = questions.filter((qq) =>
+    isAnswered(qq, answers[qq.id]),
+  ).length;
 
   // Handlers take the question explicitly: during a step transition the outgoing
   // question is still on screen, and its clicks must never land on the next one.
@@ -69,14 +77,23 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
         choices = cur.choices.filter((c) => c !== optionId);
       } else {
         const opt = q.options.find((o) => o.id === optionId);
-        const exclusiveIds = q.options.filter((o) => o.exclusive).map((o) => o.id);
+        const exclusiveIds = q.options
+          .filter((o) => o.exclusive)
+          .map((o) => o.id);
         if (opt?.exclusive) choices = [optionId];
-        else choices = [...cur.choices.filter((c) => !exclusiveIds.includes(c)), optionId];
+        else
+          choices = [
+            ...cur.choices.filter((c) => !exclusiveIds.includes(c)),
+            optionId,
+          ];
         if (q.max && choices.length > q.max) return prev;
       }
       const otherOpt = q.options.find((o) => o.other);
       const keepOther = otherOpt && choices.includes(otherOpt.id);
-      return { ...prev, [q.id]: keepOther ? { choices, other: cur.other } : { choices } };
+      return {
+        ...prev,
+        [q.id]: keepOther ? { choices, other: cur.other } : { choices },
+      };
     });
   }
 
@@ -108,7 +125,9 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
     if (step < total - 1) return go(step + 1);
 
     // Last question: if anything earlier is incomplete, take them back to it.
-    const firstMissing = questions.findIndex((qq) => !isAnswered(qq, answers[qq.id]));
+    const firstMissing = questions.findIndex(
+      (qq) => !isAnswered(qq, answers[qq.id]),
+    );
     if (firstMissing !== -1) return go(firstMissing);
 
     startSending(async () => {
@@ -139,14 +158,22 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
         : { opacity: 0, x: d * -32, pointerEvents: "none" as const },
   };
 
+  const sceneTransition = {
+    duration: reduce ? 0.15 : 0.35,
+    ease: [0.22, 1, 0.36, 1] as const,
+  };
+
   return (
-    <div className="flex flex-col gap-8">
+    <div className="page-wide flex flex-col gap-6 sm:gap-8">
       <div className="sticky top-0 z-10 -mx-4 bg-bg pt-2 pb-1 sm:mx-0">
-        <TibebBand progress={answeredCount / total} label={t.questionOf(step + 1, total)} />
+        <TibebBand
+          progress={answeredCount / total}
+          label={t.questionOf(step + 1, total)}
+        />
       </div>
 
       <form
-        className="flex flex-col gap-8"
+        className="grid gap-6 sm:gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:items-start md:gap-x-8 lg:gap-x-12"
         onSubmit={(e) => {
           e.preventDefault();
           next();
@@ -155,14 +182,42 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
         aria-busy={sending || undefined}
       >
         {/* Honeypot: invisible to people and assistive tech */}
-        <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute -left-[9999px] h-px w-px overflow-hidden"
+        >
           <label>
             Website
-            <input ref={honeypotRef} type="text" name="website" tabIndex={-1} autoComplete="off" />
+            <input
+              ref={honeypotRef}
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+            />
           </label>
         </div>
 
-        <div className="min-h-[24rem]">
+        {/* Illustration: banner above the question on phones, a panel that stays in view on desktop */}
+        <div className="md:row-span-2">
+          {ready ? (
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={`scene-${q.id}`}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+                animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={sceneTransition}
+              >
+                <Scene name={q.id} variant="panel" />
+              </motion.div>
+            </AnimatePresence>
+          ) : (
+            <div className="scene scene--panel" aria-hidden />
+          )}
+        </div>
+
+        <div className="min-h-[22rem] md:min-h-0">
           {ready && (
             <AnimatePresence mode="wait" custom={dir} initial={false}>
               <motion.div
@@ -172,7 +227,10 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: reduce ? 0.12 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: reduce ? 0.12 : 0.28,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
                 <QuestionStep
                   ref={headingRef}
@@ -192,13 +250,21 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
 
         <div className="flex items-center justify-between gap-4">
           {step > 0 ? (
-            <button type="button" className="btn-quiet" onClick={() => go(step - 1)}>
+            <button
+              type="button"
+              className="btn-quiet"
+              onClick={() => go(step - 1)}
+            >
               {t.back}
             </button>
           ) : (
             <span />
           )}
-          <button type="submit" className="btn-primary" disabled={sending || !ready}>
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={sending || !ready}
+          >
             {sending ? t.sending : step === total - 1 ? t.submit : t.next}
           </button>
         </div>

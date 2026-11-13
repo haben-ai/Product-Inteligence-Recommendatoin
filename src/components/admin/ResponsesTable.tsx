@@ -36,7 +36,7 @@ export function ResponsesTable({
         aria-label="Responses table, scrolls sideways"
       >
         <table className="w-full min-w-[72rem] border-collapse text-left text-sm">
-          <thead className="bg-bg text-fg">
+          <thead className="bg-tint text-fg">
             <tr>
               <th scope="col" className="px-3 py-2 font-semibold whitespace-nowrap">
                 Submitted
@@ -53,7 +53,7 @@ export function ResponsesTable({
           </thead>
           <tbody>
             {slice.map((r) => (
-              <tr key={r.id} className="border-t border-line align-top hover:bg-bg/60">
+              <tr key={r.id} className="border-t border-line align-top hover:bg-tint">
                 <td className="px-3 py-2 whitespace-nowrap tabular-nums text-muted">
                   {r.created_at.slice(0, 16).replace("T", " ")}
                 </td>

@@ -15,7 +15,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
   return (
     <header>
       {showBand && <TibebBand weaveIn />}
-      <div className="mx-auto flex max-w-[38rem] items-center justify-between gap-2 px-4 pt-4">
+      <div className="site-header-inner mx-auto flex max-w-[38rem] items-center justify-between gap-2 px-4 pt-4">
         <Link
           href={`/${lang}`}
           className="font-display text-base text-fg no-underline"

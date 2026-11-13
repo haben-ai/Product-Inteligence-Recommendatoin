@@ -153,7 +153,7 @@ export function UsefulnessByAge({ rows }: { rows: CrossRow[] }) {
               <li key={r.id} className="grid grid-cols-[4.5rem_minmax(0,1fr)_2.5rem] items-center gap-3">
                 <span className="text-sm text-fg">{r.label}</span>
                 {r.n === 0 ? (
-                  <span className="h-4 rounded-r-[4px] bg-bg" aria-label={`${r.label}: no answers`} />
+                  <span className="h-4 rounded-r-[4px] bg-tint" aria-label={`${r.label}: no answers`} />
                 ) : (
                   <div className="flex h-4 w-full gap-[2px]">
                     {r.segments

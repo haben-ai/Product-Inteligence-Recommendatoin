@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export const viewport: Viewport = { themeColor: "#fdf2f8" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
 // Second root layout: /admin is English-only and sits outside the /[lang] site.
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {

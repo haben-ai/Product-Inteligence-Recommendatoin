@@ -35,7 +35,7 @@ export function QuestionChart({ stat, index }: { stat: QuestionStat; index: numb
               <span className="text-sm tabular-nums text-muted" aria-hidden>
                 {o.count} · {pct(o.share)}
               </span>
-              <div className="col-span-2 h-4 w-full bg-bg" aria-hidden title={`${o.count} of ${answered} (${pct(o.share)})`}>
+              <div className="col-span-2 h-4 w-full bg-tint" aria-hidden title={`${o.count} of ${answered} (${pct(o.share)})`}>
                 <div
                   className="h-full rounded-r-[4px] bg-primary-strong transition-[filter] duration-200 group-hover:brightness-110"
                   style={{ width: `${o.share * 100}%`, minWidth: o.count > 0 ? 2 : 0 }}

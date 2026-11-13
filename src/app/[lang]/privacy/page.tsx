@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CONTACT_EMAIL, isLocale, ui } from "@/content/ui";
+import { Scene } from "@/components/illustrations/Scene";
 
 export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy">) {
   const { lang } = await params;
@@ -9,6 +10,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
 
   return (
     <article className="flex flex-col gap-8 pt-8 sm:pt-12">
+      <Scene name="privacy" />
       <h1 className="font-display text-2xl sm:text-3xl">{t.privacyTitle}</h1>
       <dl className="flex flex-col gap-6">
         {t.privacy.map((s) => (
