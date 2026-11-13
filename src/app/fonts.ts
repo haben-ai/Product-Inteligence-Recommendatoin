@@ -1,0 +1,19 @@
+import { Abyssinica_SIL, Menbere } from "next/font/google";
+
+// Menbere: modern variable Ge'ez + Latin for body text, questions and answers.
+export const menbere = Menbere({
+  subsets: ["ethiopic", "latin"],
+  weight: "variable",
+  variable: "--font-menbere",
+  display: "swap",
+});
+
+// Abyssinica SIL: traditional calligraphic Ge'ez for headings (single 400 weight).
+export const abyssinica = Abyssinica_SIL({
+  subsets: ["ethiopic", "latin"],
+  weight: "400",
+  variable: "--font-abyssinica",
+  display: "swap",
+});
+
+export const fontVariables = `${menbere.variable} ${abyssinica.variable}`;
