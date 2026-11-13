@@ -2,11 +2,11 @@
 
 # Website project
 
-Stack: Next.js (App Router, TypeScript, `src/`), Tailwind CSS, Framer Motion.
+Stack: Next.js (App Router, TypeScript, `src/`), Tailwind CSS.
 
-## Animation
-- Use Framer Motion for all animations: scroll-triggered fades, staggered reveals, smooth hover/press transitions on interactive elements.
-- Be deliberate: favour one orchestrated moment (e.g. the hero load sequence) over identical fade-ups on every section. Respect `prefers-reduced-motion` (`useReducedMotion`).
+## Look and motion
+- Keep the site **static and clean**: no animations, no illustrations/decorative images, single centred column. (The founders chose this.)
+- Simple colour changes on hover/focus are fine; no movement, transforms or entrance effects.
 
 ## Design
 - Use the `ui-ux-pro-max` skill (`.claude/skills/ui-ux-pro-max/`) for UI work: run its `--domain ux` / `--stack nextjs` searches and its pre-delivery checklist. Style: Soft UI Evolution; palette: soft pink + lavender (contrast-checked, see `src/app/globals.css`).
@@ -15,7 +15,7 @@ Stack: Next.js (App Router, TypeScript, `src/`), Tailwind CSS, Framer Motion.
 - Keep tokens in one place (Tailwind theme / CSS variables). No ad-hoc hex codes or font sizes.
 
 ## Components (21st.dev)
-- Components pasted in from https://21st.dev must be adapted to our design tokens, given our real copy, and given Framer Motion entrance animations.
+- Components pasted in from https://21st.dev must be adapted to our design tokens and real copy, with any animation removed.
 
 ## Quality floor
 - Mobile-first and responsive, visible keyboard focus, lazy-loaded images (`next/image`), optimised fonts (`next/font`), Lighthouse 90+.

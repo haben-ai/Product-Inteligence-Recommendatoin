@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 import {
@@ -13,7 +12,6 @@ import { ui } from "@/content/ui";
 import { submitSurvey } from "@/app/[lang]/survey/actions";
 import { clearProgress, loadProgress, saveProgress } from "@/lib/progress";
 import { TibebBand } from "@/components/TibebBand";
-import { Scene } from "@/components/illustrations/Scene";
 import { QuestionStep } from "./QuestionStep";
 
 const total = questions.length;
@@ -21,14 +19,12 @@ const total = questions.length;
 export function SurveyFlow({ lang }: { lang: Locale }) {
   const t = ui[lang];
   const router = useRouter();
-  const reduce = useReducedMotion();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
   const movedRef = useRef(false);
 
   const [ready, setReady] = useState(false);
   const [step, setStep] = useState(0);
-  const [dir, setDir] = useState(1);
   const [answers, setAnswers] = useState<Answers>({});
   const [error, setError] = useState<string | null>(null);
   const [sending, startSending] = useTransition();
@@ -53,8 +49,8 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
   useEffect(() => {
     if (!movedRef.current) return;
     headingRef.current?.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
-  }, [step, reduce]);
+    window.scrollTo({ top: 0 });
+  }, [step]);
 
   const q = questions[step];
   const a = answers[q.id];
@@ -62,8 +58,7 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
     isAnswered(qq, answers[qq.id]),
   ).length;
 
-  // Handlers take the question explicitly: during a step transition the outgoing
-  // question is still on screen, and its clicks must never land on the next one.
+  // Handlers take the question explicitly so a tap always lands on the question it was made on.
   function toggle(questionId: string, optionId: string) {
     const q = questions.find((qq) => qq.id === questionId);
     if (!q || !q.options.some((o) => o.id === optionId)) return;
@@ -110,7 +105,6 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
   function go(to: number) {
     movedRef.current = true;
     setError(null);
-    setDir(to > step ? 1 : -1);
     setStep(to);
   }
 
@@ -148,23 +142,8 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
     });
   }
 
-  const variants = {
-    enter: (d: number) => (reduce ? { opacity: 0 } : { opacity: 0, x: d * 32 }),
-    center: { opacity: 1, x: 0, pointerEvents: "auto" as const },
-    // The outgoing question ignores taps while it animates away.
-    exit: (d: number) =>
-      reduce
-        ? { opacity: 0, pointerEvents: "none" as const }
-        : { opacity: 0, x: d * -32, pointerEvents: "none" as const },
-  };
-
-  const sceneTransition = {
-    duration: reduce ? 0.15 : 0.35,
-    ease: [0.22, 1, 0.36, 1] as const,
-  };
-
   return (
-    <div className="page-wide flex flex-col gap-6 sm:gap-8">
+    <div className="flex flex-col gap-8">
       <div className="sticky top-0 z-10 -mx-4 bg-bg pt-2 pb-1 sm:mx-0">
         <TibebBand
           progress={answeredCount / total}
@@ -173,7 +152,7 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
       </div>
 
       <form
-        className="grid gap-6 sm:gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:items-start md:gap-x-8 lg:gap-x-12"
+        className="flex flex-col gap-8"
         onSubmit={(e) => {
           e.preventDefault();
           next();
@@ -198,53 +177,20 @@ export function SurveyFlow({ lang }: { lang: Locale }) {
           </label>
         </div>
 
-        {/* Illustration: banner above the question on phones, a panel that stays in view on desktop */}
-        <div className="md:row-span-2">
-          {ready ? (
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={`scene-${q.id}`}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
-                animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={sceneTransition}
-              >
-                <Scene name={q.id} variant="panel" />
-              </motion.div>
-            </AnimatePresence>
-          ) : (
-            <div className="scene scene--panel" aria-hidden />
-          )}
-        </div>
-
-        <div className="min-h-[22rem] md:min-h-0">
+        <div className="min-h-[22rem]">
           {ready && (
-            <AnimatePresence mode="wait" custom={dir} initial={false}>
-              <motion.div
-                key={q.id}
-                custom={dir}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  duration: reduce ? 0.12 : 0.28,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                <QuestionStep
-                  ref={headingRef}
-                  lang={lang}
-                  question={q}
-                  answer={a}
-                  index={step}
-                  total={total}
-                  error={error}
-                  onToggle={(optionId) => toggle(q.id, optionId)}
-                  onOther={(text) => setOther(q.id, text)}
-                />
-              </motion.div>
-            </AnimatePresence>
+            <QuestionStep
+              key={q.id}
+              ref={headingRef}
+              lang={lang}
+              question={q}
+              answer={a}
+              index={step}
+              total={total}
+              error={error}
+              onToggle={(optionId) => toggle(q.id, optionId)}
+              onOther={(text) => setOther(q.id, text)}
+            />
           )}
         </div>
 
