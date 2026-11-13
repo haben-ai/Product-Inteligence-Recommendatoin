@@ -3,7 +3,7 @@
 /*
   Design tokens — Tigrigna Beauty & Care
   Palette: ui-ux-pro-max "Soft pink + lavender luxury" (beauty / wellness), contrast-checked:
-    fg on bg 8.8:1 · muted on bg 6.9:1 · white on --primary-strong 4.6:1 · --danger on bg 5.9:1
+    fg on bg 8.8:1 · muted (black) on bg 19.6:1 · white on --primary-strong 4.6:1 · --danger on bg 5.9:1
   Style: Soft UI Evolution — soft layered shadows, 10–12px radii, 200–300ms transitions, visible focus.
   The woven tibeb band (top of page / survey progress) keeps its pattern in the new colours.
 */
@@ -13,7 +13,7 @@
   --bg: #fdf2f8; /* blush page background */
   --card: #ffffff;
   --fg: #831843; /* deep wine text */
-  --muted: #475569; /* secondary text */
+  --muted: #000000; /* secondary text: black (was slate grey #475569) */
   --line: #fbcfe8; /* soft borders, dividers */
   --primary: #ec4899; /* brand pink: selection, focus ring, band */
   --primary-strong: #db2777; /* buttons (white text 4.6:1) */
@@ -61,10 +61,10 @@
   --color-accent-soft: var(--accent-soft);
   --color-danger: var(--danger);
 
-  /* Abyssinica SIL: traditional calligraphic Ge'ez for headings (single weight — never faux-bold).
-     Menbere: modern variable Ge'ez + Latin for everything else. */
-  --font-sans: var(--font-menbere), system-ui, sans-serif;
-  --font-display: var(--font-abyssinica), var(--font-menbere), Georgia, serif;
+  /* Brana: all Ge'ez (Tigrinya) text — limited to Ethiopic code points via unicode-range.
+     Latin falls through: Menbere for body, Abyssinica SIL for headings (single weight — never faux-bold). */
+  --font-sans: var(--font-brana), var(--font-menbere), system-ui, sans-serif;
+  --font-display: var(--font-brana), var(--font-abyssinica), var(--font-menbere), Georgia, serif;
 
   /* Type scale (~1.25 ratio). Ethiopic glyphs need generous line-height. */
   --text-sm: 0.9375rem;

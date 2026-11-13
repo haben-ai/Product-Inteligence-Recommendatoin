@@ -1,0 +1,11 @@
+Brana Regular, Version 1.000
+Copyright (c) 1995-2019 by Amha Asfaw (Ra'ey Type, http://github.com/raeytype/).
+Brana is a trademark of Amha Asfaw.
+
+Font name table (license description):
+This Font Software is Copyright (c) 2000-2013, SIL International (http://scripts.sil.org/)
+with Reserved Font Names "Abyssinica" and "SIL".
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+Full license text: https://scripts.sil.org/OFL
+
+Used unmodified in this website for Ge'ez (Ethiopic) characters only.
