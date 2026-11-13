@@ -6,6 +6,8 @@ export const menbere = Menbere({
   weight: "variable",
   variable: "--font-menbere",
   display: "swap",
+  // next/font has no metric overrides for Menbere; skip the auto fallback (avoids a build warning).
+  adjustFontFallback: false,
 });
 
 // Abyssinica SIL: traditional calligraphic Ge'ez for headings (single 400 weight).

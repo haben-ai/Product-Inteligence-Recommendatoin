@@ -3,10 +3,14 @@ import { requireAdmin } from "@/lib/admin-auth";
 import {
   AdminDataError,
   buildStats,
+  crossTab,
+  dailyCounts,
   fetchResponses,
+  insights,
   parseFilters,
   summarize,
 } from "@/lib/survey-stats";
+import { DailyColumns, InsightTiles, LanguageSplit, UsefulnessByAge } from "@/components/admin/OverviewCharts";
 import { StatCards } from "@/components/admin/StatCards";
 import { FilterBar } from "@/components/admin/FilterBar";
 import { QuestionChart } from "@/components/admin/QuestionChart";
@@ -50,14 +54,28 @@ async function Dashboard({ searchParams }: Pick<PageProps<"/admin">, "searchPara
   }
 
   const stats = buildStats(rows);
+  const summary = summarize(rows);
 
   return (
     <>
       <div className="-mt-4 flex justify-end">
         <SignOut />
       </div>
-      <StatCards stats={summarize(rows)} />
+      {/* Filters sit above everything they scope (tiles, charts, table, CSV). */}
       <FilterBar filters={filters} />
+      <StatCards stats={summary} />
+
+      <section aria-labelledby="overview-heading" className="flex flex-col gap-4">
+        <h2 id="overview-heading" className="font-display text-xl">
+          Overview
+        </h2>
+        <InsightTiles items={insights(rows)} />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <DailyColumns days={dailyCounts(rows, filters)} />
+          <LanguageSplit ti={summary.ti} en={summary.en} />
+          <UsefulnessByAge rows={crossTab(rows, "q1_age", "q9_usefulness")} />
+        </div>
+      </section>
 
       <section aria-labelledby="charts-heading" className="flex flex-col gap-4">
         <h2 id="charts-heading" className="font-display text-xl">

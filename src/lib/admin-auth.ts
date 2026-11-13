@@ -2,6 +2,7 @@ import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 
 /**
  * Admin access: one shared password (ADMIN_PASSWORD). A successful login sets an
@@ -58,12 +59,17 @@ export function isPasswordConfigured(): boolean {
 export const sessionCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict" as const,
+  // Lax (not Strict) so the session survives opening /admin from a bookmark, email or another
+  // site; cross-site POSTs still don't carry it, and Server Actions also check the Origin.
+  sameSite: "lax" as const,
   path: "/admin",
   maxAge: MAX_AGE_SECONDS,
 };
 
 export async function isAdmin(): Promise<boolean> {
+  // The session check compares against the current time, so it must run per request,
+  // never in a prerender or prefetch.
+  await connection();
   const store = await cookies();
   return verifySessionToken(store.get(ADMIN_COOKIE)?.value);
 }
