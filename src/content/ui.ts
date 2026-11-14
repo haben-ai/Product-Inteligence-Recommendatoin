@@ -53,7 +53,7 @@ export const ui = {
     ],
     facts: ["9 ሕቶታት", "ኣስታት 2 ደቒቕ", "ስምኩም ወይ ኢመይልኩም ኣይንሓትትን"],
     start: "ንጀምር!",
-    resume: "ካብ ዝኣረፍኩምሉ ቀጽሉ",
+    resume: "ካብ ዘቋረጽኩምሉ ቀጽሉ",
     restart: "ካብ መጀመርታ ጀምሩ",
     questionOf: (n: number, total: number) => `ሕቶ ${n} ካብ ${total}`,
     next: "ቀጽሉ",
