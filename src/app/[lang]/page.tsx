@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale, ui } from "@/content/ui";
 import { StartActions } from "@/components/StartActions";
@@ -32,12 +31,6 @@ export default async function WelcomePage({ params }: PageProps<"/[lang]">) {
       </ul>
 
       <StartActions lang={lang} />
-
-      <p className="text-sm text-muted">
-        <Link href={`/${lang}/privacy`} className="link">
-          {t.privacyLink}
-        </Link>
-      </p>
     </article>
   );
 }
