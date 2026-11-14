@@ -155,7 +155,7 @@ export const questions: Question[] = [
     kind: "single",
     title: {
       en: "How confident are you in understanding cosmetic ingredient labels?",
-      ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ፍርያት ዝርከቡ ትሕዝቶ ንምርዳእ ኣብ ፍልጠትኩም ክሳብ ክንደይ ትትአማመኑ?",
+      ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ፍርያት ዝርከቡ ትሕዝቶ ንምርዳእ ኣብ ፍልጠትኩም ማዕረ ክንደይ ትትአማመኑ?",
     },
     options: [
       { id: "very", label: { en: "Very confident", ti: "ኣዝየ እተኣማመን" } },
@@ -237,7 +237,7 @@ export const questions: Question[] = [
     id: "q9_usefulness",
     kind: "single",
     title: {
-      en: "How useful would you find a free online service that helps you choose suitable skincare and haircare products based on your individual needs and in your preferred language?",
+      en: "How useful would you find an online service that helps you choose suitable skincare and haircare products based on your individual needs and in your preferred language?",
       ti: "ንውልቃዊ ድሌታትኩም ዝሰማማዕ ፍርያት፡ ብትደልይዎ ቋንቋ ንኽትመርጹ ዝሕግዘኩም ዲጂታላዊ ኣገልግሎት ክንደይ ጠቓሚ ይመስለኩም?",
     },
     options: [
