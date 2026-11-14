@@ -158,12 +158,12 @@ export const questions: Question[] = [
       ti: "ኣብ ናይ ክንክን ቆርበትን ጸጉርን ፍርያት ዝርከቡ ትሕዝቶ ንምርዳእ ኣብ ፍልጠትኩም ማዕረ ክንደይ ትትአማመኑ?",
     },
     options: [
-      { id: "very", label: { en: "Very confident", ti: "ኣዝየ እተኣማመን" } },
+      { id: "very", label: { en: "Very confident", ti: "ብዙሕ " } },
       {
         id: "somewhat",
-        label: { en: "Somewhat confident", ti: "ብመጠኑ እተኣማመን" },
+        label: { en: "Somewhat confident", ti: "ማእከላይ" },
       },
-      { id: "not", label: { en: "Not confident", ti: "ኣይተኣማመንን" } },
+      { id: "not", label: { en: "Not confident", ti: "ውሑድ" } },
       {
         id: "dont_read",
         label: {
